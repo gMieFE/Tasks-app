@@ -38,7 +38,11 @@ fun AppController() {
             TasksScreen(
                 onHomeClick = {
                     navController.navigate("home")
+                },
+                onAddTasksClick ={
+                    navController.navigate("add_tasks")
                 }
+
             )
         }
 
