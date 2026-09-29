@@ -62,7 +62,7 @@ fun AppController() {
                 }
             )
         }
-        composable("settings"){
+        composable("author"){
             AuthorScreen(
                 onHomeClick = {
                     navController.navigate("home")

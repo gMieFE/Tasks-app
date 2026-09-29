@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api  //??
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,7 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        TopAppBar(
+        TopAppBarComposable(
             appName = "StudyFlow",
             onAuthorClick = onAuthorClick
         )
@@ -53,18 +54,20 @@ fun HomeScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)  //??
 @Composable
-fun TopAppBar(
+fun TopAppBarComposable(
     onAuthorClick: () -> Unit,
-    appName: String
+    appName: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
-
-    CenterAlignedTopAppBar(
+//paklausti ar turi isokti naujas lankgas ar alertas (AlertDialog)
+  TopAppBar(
         title = {
             Text(appName)
         },
         actions = {
-            Box {
+            Box(
+                modifier = Modifier.padding(32.dp)
+            ) {
                 Text(
                     text = "⋮",
                     modifier = Modifier.clickable {
@@ -87,7 +90,10 @@ fun TopAppBar(
                     )
                 }
             }
-        }
+        },
+      colors = TopAppBarDefaults.topAppBarColors(
+          containerColor = Color(0xFF6750A4)
+      )
     )
 }
 

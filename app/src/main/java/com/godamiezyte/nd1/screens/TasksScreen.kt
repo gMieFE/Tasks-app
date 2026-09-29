@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,22 +53,9 @@ fun TasksScreen(
             )
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            var searchText by remember { mutableStateOf("") }
+        TaskSearchBar(modifier = Modifier.padding(16.dp))
 
-            OutlinedTextField(
-                value = searchText,
-                onValueChange = { searchText = it },
-                label = { Text("Search tasks") }
-            )
-        }
-
-
+        //list
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -92,6 +81,31 @@ fun TasksScreen(
             }
         }
 
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TaskSearchBar(modifier: Modifier = Modifier) {
+    var searchText by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+
+    SearchBar(
+        modifier = modifier,
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = searchText,
+                onQueryChange = { searchText = it },
+                onSearch = { expanded = false },
+                expanded = expanded,
+                onExpandedChange = { expanded = it },
+                placeholder = { Text("Search tasks") }  //pasiklausti del tokiu stringu
+            )
+        },
+        expanded = expanded,
+        onExpandedChange = { expanded = it }
+    ) {
+        // Search results
     }
 }
 
