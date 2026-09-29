@@ -1,14 +1,16 @@
 package com.godamiezyte.nd1
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.godamiezyte.nd1.screens.AddTasksScreen
+import com.godamiezyte.nd1.screens.AuthorScreen
 import com.godamiezyte.nd1.screens.HomeScreen
 import com.godamiezyte.nd1.screens.TasksScreen
-import com.godamiezyte.nd1.screens.AddTasksScreen
 import com.godamiezyte.nd1.screens.TasksStatisticsScreen
-import com.godamiezyte.nd1.screens.SettingsScreen
+
 @Composable
 fun AppController() {
     val navController = rememberNavController()
@@ -28,7 +30,7 @@ fun AppController() {
                 onTasksStatisticsClick = {
                     navController.navigate("tasks_statistics")
                 },
-                onSettingsClick = {
+                onAuthorClick = {
                     navController.navigate("settings")
                 }
             )
@@ -61,10 +63,12 @@ fun AppController() {
             )
         }
         composable("settings"){
-            SettingsScreen(
+            AuthorScreen(
                 onHomeClick = {
                     navController.navigate("home")
-                }
+                },
+                author = stringResource(R.string.autor_name),
+                group = stringResource(R.string.author_group)
             )
         }
     }
