@@ -1,10 +1,8 @@
 package com.godamiezyte.nd1.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,38 +18,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.godamiezyte.nd1.TopAppBarComposable
 
 @Composable
 fun TasksScreen(
     onHomeClick: () -> Unit,
+    onAuthorClick:() -> Unit,
     onAddTasksClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 32.dp, horizontal = 16.dp),
     ) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-        ) {
-            Button(
-                onClick = onHomeClick,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-            ) {
-                Text(
-                    text = "Home",
-                )
-            }
-
-            Text(
-                text = "Tasks",
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        TopAppBarComposable(
+            appName = "StudyFlow",
+            onAuthorClick = onAuthorClick,
+            onHomeClick = onHomeClick
+        )
 
         TaskSearchBar(modifier = Modifier.padding(16.dp))
 
@@ -60,6 +44,7 @@ fun TasksScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
+                .padding(vertical = 32.dp, horizontal = 16.dp),
         ) {
             Text(
                 text = "1. Blah blak"
@@ -114,6 +99,7 @@ fun TaskSearchBar(modifier: Modifier = Modifier) {
 fun TasksScreenPreview() {
     TasksScreen(
         onHomeClick = {},
-        onAddTasksClick = {}
+        onAddTasksClick = {},
+        onAuthorClick = {}
     )
 }

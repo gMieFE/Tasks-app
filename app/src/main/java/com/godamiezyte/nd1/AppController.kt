@@ -1,12 +1,14 @@
 package com.godamiezyte.nd1
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.godamiezyte.nd1.screens.AddTasksScreen
-import com.godamiezyte.nd1.screens.AuthorScreen
 import com.godamiezyte.nd1.screens.HomeScreen
 import com.godamiezyte.nd1.screens.TasksScreen
 import com.godamiezyte.nd1.screens.TasksStatisticsScreen
@@ -15,12 +17,18 @@ import com.godamiezyte.nd1.screens.TasksStatisticsScreen
 fun AppController() {
     val navController = rememberNavController()
 
+    var showAuthorDialog by remember { mutableStateOf(false) }
+
     NavHost(
         navController = navController,
         startDestination = "home"
     ) {
+
         composable("home") {
             HomeScreen(
+                onHomeClick = {
+                    navController.navigate("home")
+                },
                 onTasksClick = {
                     navController.navigate("tasks")
                 },
@@ -31,7 +39,7 @@ fun AppController() {
                     navController.navigate("tasks_statistics")
                 },
                 onAuthorClick = {
-                    navController.navigate("settings")
+                    showAuthorDialog = true
                 }
             )
         }
@@ -41,10 +49,12 @@ fun AppController() {
                 onHomeClick = {
                     navController.navigate("home")
                 },
-                onAddTasksClick ={
+                onAddTasksClick = {
                     navController.navigate("add_tasks")
+                },
+                onAuthorClick = {
+                    showAuthorDialog = true
                 }
-
             )
         }
 
@@ -52,24 +62,30 @@ fun AppController() {
             AddTasksScreen(
                 onHomeClick = {
                     navController.navigate("home")
+                },
+                onAuthorClick = {
+                    showAuthorDialog = true
                 }
             )
         }
+
         composable("tasks_statistics") {
             TasksStatisticsScreen(
                 onHomeClick = {
                     navController.navigate("home")
+                },
+                onAuthorClick = {
+                    showAuthorDialog = true
                 }
             )
         }
-        composable("author"){
-            AuthorScreen(
-                onHomeClick = {
-                    navController.navigate("home")
+    }
+
+        if (showAuthorDialog) {
+            AuthorDialog(
+                onDismiss = {
+                    showAuthorDialog = false
                 },
-                author = stringResource(R.string.autor_name),
-                group = stringResource(R.string.author_group)
             )
         }
-    }
 }
