@@ -1,7 +1,11 @@
 package com.godamiezyte.nd1
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
@@ -18,10 +22,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-@OptIn(ExperimentalMaterial3Api::class)  //??
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarComposable(
     onHomeClick: () -> Unit,
@@ -29,47 +37,73 @@ fun TopAppBarComposable(
     appName: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
-//paklausti ar turi isokti naujas lankgas ar alertas (AlertDialog)
-    TopAppBar(
-        title = {
-            Text(
-                text = appName,
-                modifier = Modifier.clickable {
-                    onHomeClick()
-                }
-            )
-        },
-        actions = {
-            Box(
-                modifier = Modifier.padding(32.dp)
-            ) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(64.dp)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.cat_collage),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // Dark overlay
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Black.copy(alpha = 0.4f))
+        )
+
+        TopAppBar(
+            modifier = Modifier.fillMaxWidth(),
+            title = {
                 Text(
-                    text = "⋮",
+                    text = appName,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable {
-                        expanded = true
+                        onHomeClick()
                     }
                 )
-
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = {
-                        expanded = false
-                    }
+            },
+            actions = {
+                Box(
+                    modifier = Modifier.padding(end = 16.dp)
                 ) {
-                    DropdownMenuItem(
-                        text = { Text("Author") },
-                        onClick = {
-                            expanded = false
-                            onAuthorClick()
+                    Text(
+                        text = "⋮",
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+                            expanded = true
                         }
                     )
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = {
+                            expanded = false
+                        }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Author") },
+                            onClick = {
+                                expanded = false
+                                onAuthorClick()
+                            }
+                        )
+                    }
                 }
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF6750A4)
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Transparent
+            )
         )
-    )
+    }
 }
 
 @Composable
@@ -90,7 +124,7 @@ fun AuthorDialog(
             TextButton(
                 onClick = onDismiss
             ) {
-                Text("Gerai")
+                Text("Ok")
             }
         }
     )

@@ -10,10 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.godamiezyte.nd1.R
 import com.godamiezyte.nd1.TopAppBarComposable
+import com.godamiezyte.nd1.ui.theme.LightBrown
 
 
 @Composable
@@ -29,7 +31,7 @@ fun HomeScreen(
     ) {
 
         TopAppBarComposable(
-            appName = "StudyFlow",
+            appName = stringResource(R.string.task_app_name),
             onAuthorClick = onAuthorClick,
             onHomeClick = onHomeClick
         )
@@ -55,7 +57,7 @@ fun HomeBody(
 ) {
     Column(
         modifier = modifier
-            .background(Color(0xFFE8DEF8))
+            .background(LightBrown)
             .padding(16.dp)
     ) {
         Column(
@@ -69,17 +71,17 @@ fun HomeBody(
         }
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(2f)
-        ) {
-            Button(
-                onClick = onTasksStatisticsClick
-            ) {
-                Text("Statistics")
-            }
-        }
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .weight(2f)
+//        ) {
+//            Button(
+//                onClick = onTasksStatisticsClick
+//            ) {
+//                Text("Statistics")
+//            }
+//        }
 
         Column(
             modifier = Modifier

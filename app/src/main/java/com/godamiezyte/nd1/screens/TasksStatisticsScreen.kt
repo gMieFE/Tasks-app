@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.godamiezyte.nd1.R
 import com.godamiezyte.nd1.TopAppBarComposable
 
 @Composable
@@ -22,7 +24,7 @@ fun TasksStatisticsScreen(
         Text("Tasks Statistics")
 
         TopAppBarComposable(
-            appName = "StudyFlow",
+            appName = stringResource(R.string.task_app_name),
             onAuthorClick = onAuthorClick,
             onHomeClick = onHomeClick
         )

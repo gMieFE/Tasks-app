@@ -19,6 +19,8 @@ fun AppController() {
 
     var showAuthorDialog by remember { mutableStateOf(false) }
 
+    var tasks by remember { mutableStateOf(listOf<Task>()) }
+
     NavHost(
         navController = navController,
         startDestination = "home"
@@ -54,7 +56,8 @@ fun AppController() {
                 },
                 onAuthorClick = {
                     showAuthorDialog = true
-                }
+                },
+                tasks = tasks
             )
         }
 
@@ -65,6 +68,10 @@ fun AppController() {
                 },
                 onAuthorClick = {
                     showAuthorDialog = true
+                },
+                onTaskAdded = { task ->
+                    tasks = tasks + task
+                    navController.navigate("tasks")
                 }
             )
         }
