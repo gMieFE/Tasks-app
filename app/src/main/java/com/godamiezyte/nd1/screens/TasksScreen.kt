@@ -1,7 +1,10 @@
 package com.godamiezyte.nd1.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -56,6 +59,9 @@ fun TasksScreen(
         task.name.contains(searchText, ignoreCase = true)
     }
 
+    var expandedTask by remember { mutableStateOf<String?>(null) }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,45 +89,68 @@ fun TasksScreen(
                     vertical = 20.dp,
                     horizontal = 16.dp
                 ),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(filteredTasks) { task ->
 
-                Row(
+                val isExpanded = expandedTask == task.name
+
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
                             color = Cream,
                             shape = RoundedCornerShape(14.dp)
                         )
-                        .padding(14.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .animateContentSize()
+                        .clickable {
+                            expandedTask =
+                                if (isExpanded) null else task.name
+                        }
+                        .padding(14.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = task.name,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = primary
-                        )
 
-                        Text(
-                            text = task.dateTime,
-                            fontSize = 13.sp,
-                            color = secondary,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = task.name,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = primary
+                            )
+
+                            Text(
+                                text = task.dateTime,
+                                fontSize = 13.sp,
+                                color = secondary,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
+
+                        if (task.important) {
+                            Box(
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .background(
+                                        color = accent,
+                                        shape = CircleShape
+                                    )
+                            )
+                        }
                     }
 
-                    if (task.important) {
-                        Box(
-                            modifier = Modifier
-                                .size(12.dp)
-                                .background(
-                                    color = accent,
-                                    shape = CircleShape
-                                )
+                    if (isExpanded) {
+                        Text(
+                            text = task.bio,
+                            fontSize = 14.sp,
+                            color = secondary,
+                            modifier = Modifier.padding(top = 12.dp)
                         )
                     }
                 }

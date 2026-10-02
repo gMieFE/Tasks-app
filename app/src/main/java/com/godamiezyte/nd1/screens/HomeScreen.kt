@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +45,9 @@ fun HomeScreen(
     tasks: List<Task>
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("home_screen")
     ) {
 
         TopAppBarComposable(
@@ -141,11 +144,10 @@ fun HomeBody(
 
 
                 importantTasks.forEach { task ->
-
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 10.dp),
+                            .padding(bottom = 10.dp, end = 16.dp),
                         shape = RoundedCornerShape(18.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White
