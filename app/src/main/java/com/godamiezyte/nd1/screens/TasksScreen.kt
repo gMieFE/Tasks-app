@@ -5,16 +5,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -28,17 +29,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.godamiezyte.nd1.R
 import com.godamiezyte.nd1.Task
 import com.godamiezyte.nd1.TopAppBarComposable
-import com.godamiezyte.nd1.ui.theme.LightBrown
+import com.godamiezyte.nd1.ui.theme.Cream
+import com.godamiezyte.nd1.ui.theme.accent
+import com.godamiezyte.nd1.ui.theme.background
+import com.godamiezyte.nd1.ui.theme.primary
+import com.godamiezyte.nd1.ui.theme.secondary
 
 @Composable
 fun TasksScreen(
     onHomeClick: () -> Unit,
-    onAuthorClick:() -> Unit,
+    onAuthorClick: () -> Unit,
     onAddTasksClick: () -> Unit,
     tasks: List<Task>
 ) {
@@ -52,7 +59,7 @@ fun TasksScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBrown)
+            .background(background)
     ) {
 
         TopAppBarComposable(
@@ -70,41 +77,50 @@ fun TasksScreen(
 
         LazyColumn(
             modifier = Modifier
-                .weight(1f)
+                .weight(2f)
                 .fillMaxWidth()
-                .padding(vertical = 32.dp, horizontal = 16.dp)
+                .padding(
+                    vertical = 20.dp,
+                    horizontal = 16.dp
+                ),
         ) {
             items(filteredTasks) { task ->
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFF8EBDD))
-                        .padding(vertical = 12.dp, horizontal = 8.dp),
+                        .background(
+                            color = Cream,
+                            shape = RoundedCornerShape(14.dp)
+                        )
+                        .padding(14.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = task.name
-                    )
-
-                    Spacer(
-                        modifier = Modifier.width(32.dp)
-                    )
-
-                    Text(
-                        text = task.dateTime
-                    )
-
-                    Spacer(
+                    Column(
                         modifier = Modifier.weight(1f)
-                    )
+                    ) {
+                        Text(
+                            text = task.name,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = primary
+                        )
+
+                        Text(
+                            text = task.dateTime,
+                            fontSize = 13.sp,
+                            color = secondary,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
 
                     if (task.important) {
                         Box(
                             modifier = Modifier
-                                .size(16.dp)
+                                .size(12.dp)
                                 .background(
-                                    Color.Red,
-                                    CircleShape
+                                    color = accent,
+                                    shape = CircleShape
                                 )
                         )
                     }
@@ -114,19 +130,31 @@ fun TasksScreen(
 
         Column(
             modifier = Modifier
-                .align(Alignment.End)
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 62.dp
+                )
         ) {
             Button(
                 onClick = onAddTasksClick,
                 modifier = Modifier
-                    .align(Alignment.End)
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = accent,
+                    contentColor = Color.White
+                )
             ) {
-                Text("+")
+                Text(
+                    text = "+ Add task",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
-
     }
 }
 
@@ -153,7 +181,12 @@ fun TaskSearchBar(
                 onSearch = { expanded = false },
                 expanded = expanded,
                 onExpandedChange = { expanded = it },
-                placeholder = { Text("Search tasks") }
+                placeholder = {
+                    Text(
+                        text = "Search tasks",
+                        color = secondary
+                    )
+                }
             )
         },
         expanded = expanded,
@@ -163,6 +196,7 @@ fun TaskSearchBar(
             items(tasks) { task ->
                 Text(
                     text = task.name,
+                    color = primary,
                     modifier = Modifier.padding(16.dp)
                 )
             }

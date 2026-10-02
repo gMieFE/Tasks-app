@@ -37,12 +37,13 @@ fun AppController() {
                 onAddTasksClick = {
                     navController.navigate("add_tasks")
                 },
-                onTasksStatisticsClick = {
-                    navController.navigate("tasks_statistics")
-                },
+//                onTasksStatisticsClick = {
+//                    navController.navigate("tasks_statistics")
+//                },
                 onAuthorClick = {
                     showAuthorDialog = true
-                }
+                },
+                tasks = tasks
             )
         }
 

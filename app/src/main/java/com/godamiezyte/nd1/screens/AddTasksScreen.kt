@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -22,13 +26,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.godamiezyte.nd1.R
 import com.godamiezyte.nd1.Task
 import com.godamiezyte.nd1.TopAppBarComposable
-import com.godamiezyte.nd1.ui.theme.Brown
-import com.godamiezyte.nd1.ui.theme.LightBrown
+import com.godamiezyte.nd1.ui.theme.Cream
+import com.godamiezyte.nd1.ui.theme.LightBeige
+import com.godamiezyte.nd1.ui.theme.accent
+import com.godamiezyte.nd1.ui.theme.background
+import com.godamiezyte.nd1.ui.theme.primary
+import com.godamiezyte.nd1.ui.theme.secondary
 
 @Composable
 fun AddTasksScreen(
@@ -39,7 +50,7 @@ fun AddTasksScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBrown),
+            .background(background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TopAppBarComposable(
@@ -50,7 +61,10 @@ fun AddTasksScreen(
 
         Column(
             modifier = Modifier
-                .padding(vertical = 32.dp, horizontal = 16.dp)
+                .padding(
+                    vertical = 28.dp,
+                    horizontal = 20.dp
+                )
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -60,55 +74,124 @@ fun AddTasksScreen(
             var bio by remember { mutableStateOf("") }
             var important by remember { mutableStateOf(false) }
 
+            Text(
+                text = "Create a task",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                color = primary,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Text(
+                text = "Add the details for your new task.",
+                fontSize = 14.sp,
+                color = secondary,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+
             OutlinedTextField(
                 value = taskName,
                 onValueChange = { taskName = it },
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedBorderColor = Color.Transparent
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
                 ),
-                label = { Text("Task name") }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Cream,
+                    focusedContainerColor = Cream,
+                    unfocusedBorderColor = LightBeige,
+                    focusedBorderColor = accent,
+                    focusedTextColor = primary,
+                    unfocusedTextColor = primary,
+                    focusedLabelColor = accent,
+                    unfocusedLabelColor = secondary
+                ),
+                label = {
+                    Text("Task name")
+                }
             )
+
 
             OutlinedTextField(
                 value = dateTime,
                 onValueChange = { dateTime = it },
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedBorderColor = Color.Transparent
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
                 ),
-                label = { Text("Date and time")}
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor =Cream,
+                    focusedContainerColor = Cream,
+                    unfocusedBorderColor = LightBeige,
+                    focusedBorderColor = accent,
+                    focusedTextColor = primary,
+                    unfocusedTextColor = primary,
+                    focusedLabelColor = accent,
+                    unfocusedLabelColor = secondary
+                ),
+                label = {
+                    Text("Date and time")
+                }
             )
+
 
             OutlinedTextField(
                 value = bio,
                 onValueChange = { bio = it },
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedBorderColor = Color.Transparent
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
                 ),
-                label = { Text("Extra details")}
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Cream,
+                    focusedContainerColor = Cream,
+                    unfocusedBorderColor = LightBeige,
+                    focusedBorderColor = accent,
+                    focusedTextColor = primary,
+                    unfocusedTextColor = primary,
+                    focusedLabelColor = accent,
+                    unfocusedLabelColor = secondary
+                ),
+                label = {
+                    Text("Extra details")
+                }
             )
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
                     checked = important,
-                    onCheckedChange = { important = it }
+                    onCheckedChange = { important = it },
+
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = accent,
+                        uncheckedColor = secondary,
+                        checkmarkColor = Color.White
+                    )
                 )
 
-                Text("Important")
+                Text(
+                    text = "Important",
+                    color = primary,
+                    fontWeight = FontWeight.Medium
+                )
             }
+
 
             ElevatedButton(
                 onClick = {
@@ -121,14 +204,21 @@ fun AddTasksScreen(
 
                     onTaskAdded(task)
                 },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor =  Brown,
+                    containerColor = accent,
                     contentColor = Color.White
                 )
             ) {
-                Text("ADD")
+                Text(
+                    text = "ADD TASK",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
-
         }
     }
 }

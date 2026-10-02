@@ -28,8 +28,9 @@ fun HomeScreenPreview() {
     HomeScreen(
         onTasksClick = {},
         onAddTasksClick = {},
-        onTasksStatisticsClick = {},
+        //onTasksStatisticsClick = {},
         onAuthorClick = {},
-        onHomeClick = {}
+        onHomeClick = {},
+        tasks = emptyList()
     )
 }
