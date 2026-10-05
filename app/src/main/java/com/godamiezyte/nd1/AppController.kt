@@ -3,7 +3,7 @@ package com.godamiezyte.nd1
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,9 +17,9 @@ import com.godamiezyte.nd1.screens.TasksStatisticsScreen
 fun AppController() {
     val navController = rememberNavController()
 
-    var showAuthorDialog by remember { mutableStateOf(false) }
+    var showAuthorDialog by rememberSaveable  { mutableStateOf(false) }
 
-    var tasks by remember { mutableStateOf(listOf<Task>()) }
+    var tasks by rememberSaveable  { mutableStateOf(listOf<Task>()) }
 
     NavHost(
         navController = navController,

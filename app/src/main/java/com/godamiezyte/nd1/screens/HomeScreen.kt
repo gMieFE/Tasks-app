@@ -1,6 +1,6 @@
-
 package com.godamiezyte.nd1.screens
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +38,6 @@ import com.godamiezyte.nd1.ui.theme.background
 import com.godamiezyte.nd1.ui.theme.primary
 import com.godamiezyte.nd1.ui.theme.secondary
 
-
 @Composable
 fun HomeScreen(
     onAuthorClick: () -> Unit,
@@ -44,24 +46,59 @@ fun HomeScreen(
     onHomeClick: () -> Unit,
     tasks: List<Task>
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag("home_screen")
-    ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape =
+        configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-        TopAppBarComposable(
-            appName = stringResource(R.string.task_app_name),
-            onAuthorClick = onAuthorClick,
-            onHomeClick = onHomeClick
-        )
 
-        HomeBody(
-            onTasksClick = onTasksClick,
-            onAddTasksClick = onAddTasksClick,
-            modifier = Modifier.weight(1f),
-            tasks = tasks
-        )
+    if (isLandscape) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(background)
+                .testTag("home_screen")
+                .verticalScroll(rememberScrollState()),
+        ) {
+
+            TopAppBarComposable(
+                appName = stringResource(R.string.task_app_name),
+                onAuthorClick = onAuthorClick,
+                onHomeClick = onHomeClick
+            )
+
+            HomeBody(
+                onTasksClick = onTasksClick,
+                onAddTasksClick = onAddTasksClick,
+                modifier = Modifier
+                    .padding(horizontal = 52.dp, vertical = 8.dp),
+                tasks = tasks
+            )
+        }
+    } else {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag("home_screen")
+        ) {
+
+            TopAppBarComposable(
+                appName = stringResource(R.string.task_app_name),
+                onAuthorClick = onAuthorClick,
+                onHomeClick = onHomeClick
+            )
+
+            HomeBody(
+                onTasksClick = onTasksClick,
+                onAddTasksClick = onAddTasksClick,
+                modifier = Modifier
+                    .weight(1f)
+                    .background(background)
+                    .padding(16.dp),
+                tasks = tasks
+            )
+        }
     }
 }
 
@@ -73,15 +110,9 @@ fun HomeBody(
     modifier: Modifier = Modifier,
     tasks: List<Task>
 ) {
-
-
     Column(
         modifier = modifier
-            .background(background)
-            .padding(20.dp)
     ) {
-
-        // Header
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -101,9 +132,10 @@ fun HomeBody(
             )
         }
 
-
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -131,7 +163,6 @@ fun HomeBody(
             }
         }
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,63 +170,63 @@ fun HomeBody(
                 .padding(top = 8.dp),
             verticalArrangement = Arrangement.Top
         ) {
-
             val importantTasks = tasks.filter { it.important }
 
-
-                importantTasks.forEach { task ->
-                    Card(
+            importantTasks.forEach { task ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 10.dp, end = 16.dp),
+                    shape = RoundedCornerShape(18.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 2.dp
+                    )
+                ) {
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 10.dp, end = 16.dp),
-                        shape = RoundedCornerShape(18.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color.White
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 2.dp
-                        )
+                            .padding(18.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
+                        Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(18.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                                .width(5.dp)
+                                .height(40.dp)
+                                .background(
+                                    accent,
+                                    RoundedCornerShape(10.dp)
+                                )
+                                .padding(bottom = 8.dp, start = 8.dp)
+                        )
 
-                            Box(
-                                modifier = Modifier
-                                    .width(5.dp)
-                                    .height(40.dp)
-                                    .background(
-                                        accent,
-                                        RoundedCornerShape(10.dp)
-                                    )
-                                    .padding(bottom = 8.dp)
-                            )
+                        Text(
+                            text = task.name,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = primary,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                        )
 
-
-                            Text(
-                                text = task.name,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = primary
-                            )
-                            Text(
-                                text = task.dateTime,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = primary
-                            )
-                        }
+                        Text(
+                            text = task.dateTime,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = primary,
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                        )
                     }
                 }
+            }
         }
 
-
-        Column (
+        Column(
             modifier = Modifier.padding(bottom = 32.dp)
-        ){
+        ) {
             Button(
                 onClick = onTasksClick,
                 modifier = Modifier
@@ -213,7 +244,6 @@ fun HomeBody(
                     fontWeight = FontWeight.Bold
                 )
             }
-
 
             Button(
                 onClick = onAddTasksClick,
@@ -245,7 +275,36 @@ fun HomeScreenPreview() {
         onAddTasksClick = {},
         onAuthorClick = {},
         onHomeClick = {},
-        tasks = emptyList()
+        tasks = listOf(
+            Task(
+                name = "Test task",
+                dateTime = "Today",
+                bio = "Test description",
+                important = true
+            )
+        )
     )
 }
 
+@Preview(
+    showBackground = true,
+    widthDp = 800,
+    heightDp = 400
+)
+@Composable
+fun HomeScreenPreview1() {
+    HomeScreen(
+        onTasksClick = {},
+        onAddTasksClick = {},
+        onAuthorClick = {},
+        onHomeClick = {},
+        tasks = listOf(
+            Task(
+                name = "Test task",
+                dateTime = "Today",
+                bio = "Test description",
+                important = true
+            )
+        )
+    )
+}
