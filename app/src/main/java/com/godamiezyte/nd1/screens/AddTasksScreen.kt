@@ -261,19 +261,6 @@ fun AddTasksScreen(
     }
 
 
-@Composable
-fun TaskForm(
-    modifier: Modifier = Modifier,
-) {
-
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun AddTasksScreenPreview() {

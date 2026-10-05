@@ -2,12 +2,10 @@ package com.godamiezyte.nd1
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -82,7 +80,6 @@ fun TopAppBarComposable(
                     onClick = onHomeClick,
                     modifier = Modifier
                         .padding( horizontal = 16.dp)
-                        .size(28.dp)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.home_1_svgrepo_com),
@@ -95,18 +92,19 @@ fun TopAppBarComposable(
             actions = {
                 Box(
                     modifier = Modifier
-                        .padding(end = 16.dp)
-                        ,
+                        .padding(end = 16.dp),
                 ) {
-                    Text(
-                        text = "⋮",
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFFFFFCF8),
-                        modifier = Modifier.clickable {
+                    IconButton(
+                        onClick = {
                             expanded = true
                         }
-                    )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.more_vertical_svgrepo_com),
+                            contentDescription = "More options",
+                            tint = Color.White
+                        )
+                    }
 
                     DropdownMenu(
                         expanded = expanded,
