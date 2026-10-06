@@ -46,18 +46,3 @@ Windows:
 ```powershell
 .\gradlew.bat build
 ```
-
-## Project Structure
-
-```text
-Tasks-app/
-├── app/
-├── gradle/
-├── build.gradle.kts
-├── settings.gradle.kts
-└── gradle.properties
-```
-
-## Author
-
-gMieFE
