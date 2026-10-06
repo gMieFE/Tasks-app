@@ -33,16 +33,3 @@ cd Tasks-app
 
 Open the project in Android Studio, sync Gradle, and run the application on an Android device or emulator.
 
-## Build
-
-Linux/macOS:
-
-```bash
-./gradlew build
-```
-
-Windows:
-
-```powershell
-.\gradlew.bat build
-```
